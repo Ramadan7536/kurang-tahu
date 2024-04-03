@@ -1,0 +1,50 @@
+-- Create a ScreenGui object to hold the UI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create a Frame to serve as the background
+local backgroundFrame = Instance.new("Frame")
+backgroundFrame.Size = UDim2.new(0, 200, 0, 250) -- Size of the frame
+backgroundFrame.Position = UDim2.new(0.5, -100, 0.5, -125) -- Center the frame
+backgroundFrame.BackgroundColor3 = Color3.new(0, 0, 0) -- Black background color
+backgroundFrame.BorderSizePixel = 0 -- No border
+backgroundFrame.Parent = screenGui
+
+-- Create a TextLabel for the title
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0.1, 0) -- Size of the title
+titleLabel.Position = UDim2.new(0, 0, 0, 0) -- Position at the top
+titleLabel.Text = "Roblox UI"
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextSize = 24
+titleLabel.TextColor3 = Color3.new(1, 0, 0) -- Red text color
+titleLabel.BackgroundTransparency = 1 -- Transparent background
+titleLabel.Parent = backgroundFrame
+
+-- Create a TextButton for flying toggle
+local flyToggleButton = Instance.new("TextButton")
+flyToggleButton.Size = UDim2.new(0.5, 0, 0.1, 0) -- Size of the button
+flyToggleButton.Position = UDim2.new(0.25, 0, 0.15, 0) -- Position below the title
+flyToggleButton.Text = "Fly: Off"
+flyToggleButton.Font = Enum.Font.SourceSansBold
+flyToggleButton.TextSize = 18
+flyToggleButton.TextColor3 = Color3.new(1, 1, 1) -- White text color
+flyToggleButton.BackgroundColor3 = Color3.new(0, 0, 0) -- Black button color
+flyToggleButton.Parent = backgroundFrame
+
+-- Variable to track the fly toggle state
+local flyToggleState = false
+
+-- Function to handle fly toggle button click event
+flyToggleButton.MouseButton1Click:Connect(function()
+    flyToggleState = not flyToggleState -- Invert the fly toggle state
+    if flyToggleState then
+        flyToggleButton.Text = "Fly: On"
+        -- Enable flying
+        game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+    else
+        flyToggleButton.Text = "Fly: Off"
+        -- Disable flying
+        game.Players.LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+    end
+end)
